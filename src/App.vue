@@ -602,32 +602,39 @@ onMounted(() => {
 </template>
 
 <style>
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap');
+
 /* ===== 全局 ===== */
 .app-root {
   position: relative;
   min-height: 100vh;
   overflow-x: hidden;
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  -webkit-font-smoothing: antialiased;
 }
 
+/* ===== 玻璃拟态（精调） ===== */
 .glass {
-  background: rgba(255, 255, 255, 0.12);
-  backdrop-filter: blur(24px);
-  -webkit-backdrop-filter: blur(24px);
-  border: 1px solid rgba(255, 255, 255, 0.25);
-  border-radius: 20px;
-  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.12);
+  background: rgba(255, 255, 255, 0.07);
+  backdrop-filter: blur(30px) saturate(1.2);
+  -webkit-backdrop-filter: blur(30px) saturate(1.2);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 24px;
+  box-shadow:
+    0 8px 32px rgba(0, 0, 0, 0.15),
+    inset 0 1px 0 rgba(255, 255, 255, 0.08);
 }
 
 /* ===== 主内容布局 ===== */
 .main-content {
   position: relative;
   z-index: 10;
-  max-width: 900px;
+  max-width: 860px;
   margin: 0 auto;
-  padding: 24px 20px 40px;
+  padding: 32px 24px 48px;
   display: flex;
   flex-direction: column;
-  gap: 20px;
+  gap: 16px;
   min-height: 100vh;
 }
 
@@ -635,23 +642,25 @@ onMounted(() => {
 .searching-indicator {
   display: flex;
   align-items: center;
-  gap: 8px;
-  padding: 8px 16px;
-  color: rgba(255, 255, 255, 0.7);
-  font-size: 0.85rem;
+  gap: 10px;
+  padding: 6px 16px;
+  color: rgba(255, 255, 255, 0.5);
+  font-size: 0.8rem;
+  font-weight: 500;
+  letter-spacing: 0.3px;
 }
 
 .searching-dot {
-  width: 8px;
-  height: 8px;
+  width: 6px;
+  height: 6px;
   border-radius: 50%;
-  background: #fff;
-  animation: pulse 1s ease-in-out infinite;
+  background: rgba(255, 255, 255, 0.7);
+  animation: pulse 1.2s ease-in-out infinite;
 }
 
 @keyframes pulse {
-  0%, 100% { opacity: 0.3; transform: scale(0.8); }
-  50% { opacity: 1; transform: scale(1.2); }
+  0%, 100% { opacity: 0.2; transform: scale(0.8); }
+  50% { opacity: 1; transform: scale(1.3); }
 }
 
 /* ===== 顶部栏 ===== */
@@ -659,76 +668,107 @@ onMounted(() => {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 14px 24px;
+  padding: 16px 28px;
   color: #fff;
+  border-radius: 20px;
 }
 
 .brand {
   display: flex;
   align-items: center;
-  gap: 10px;
-  font-size: 1.15rem;
-  font-weight: 700;
+  gap: 12px;
+  font-size: 1rem;
+  font-weight: 600;
+  letter-spacing: 0.5px;
+  color: rgba(255, 255, 255, 0.9);
 }
 
-.brand-icon { font-size: 1.5rem; }
+.brand-icon {
+  font-size: 1.3rem;
+  filter: drop-shadow(0 0 8px rgba(255, 200, 50, 0.3));
+}
 
 .top-bar-right {
   display: flex;
   align-items: center;
-  gap: 12px;
+  gap: 8px;
 }
 
 .unit-btn {
-  padding: 4px 10px;
-  border: 1px solid rgba(255, 255, 255, 0.3);
-  border-radius: 6px;
-  background: rgba(255, 255, 255, 0.1);
-  color: #fff;
-  font-size: 0.85rem;
+  padding: 6px 12px;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: 10px;
+  background: rgba(255, 255, 255, 0.06);
+  color: rgba(255, 255, 255, 0.8);
+  font-size: 0.78rem;
   font-weight: 700;
+  letter-spacing: 0.5px;
   cursor: pointer;
-  transition: background 0.2s;
+  transition: all 0.25s ease;
 }
-.unit-btn:hover { background: rgba(255, 255, 255, 0.25); }
+.unit-btn:hover {
+  background: rgba(255, 255, 255, 0.14);
+  border-color: rgba(255, 255, 255, 0.2);
+  color: #fff;
+}
 
 .refresh-btn {
   display: flex;
   align-items: center;
   justify-content: center;
-  width: 32px;
-  height: 32px;
+  width: 34px;
+  height: 34px;
   border: none;
-  border-radius: 8px;
-  background: rgba(255, 255, 255, 0.1);
-  color: #fff;
+  border-radius: 10px;
+  background: rgba(255, 255, 255, 0.06);
+  color: rgba(255, 255, 255, 0.7);
   cursor: pointer;
-  transition: background 0.2s, transform 0.3s;
+  transition: all 0.3s ease;
 }
 .refresh-btn:hover {
-  background: rgba(255, 255, 255, 0.25);
+  background: rgba(255, 255, 255, 0.14);
+  color: #fff;
   transform: rotate(180deg);
 }
 
-/* ===== 天气卡片 ===== */
+/* ===== 核心天气卡片 ===== */
 .hero-card {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 36px 40px;
+  padding: 48px 48px;
   color: #fff;
-  min-height: 220px;
+  min-height: 240px;
+  border-radius: 28px;
+  position: relative;
+  overflow: hidden;
+}
+
+.hero-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 50%;
+  height: 100%;
+  background: radial-gradient(ellipse at 70% 30%, rgba(255, 255, 255, 0.04) 0%, transparent 70%);
+  pointer-events: none;
 }
 
 .hero-left {
   display: flex;
   flex-direction: column;
-  gap: 10px;
+  gap: 8px;
+  position: relative;
+  z-index: 1;
 }
 
 .greeting {
-  font-size: 1.1rem;
-  color: rgba(255, 255, 255, 0.75);
+  font-size: 0.85rem;
+  color: rgba(255, 255, 255, 0.45);
+  font-weight: 500;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
 }
 
 .location-row {
@@ -739,25 +779,32 @@ onMounted(() => {
 }
 
 .pin-icon {
-  width: 20px;
-  height: 20px;
-  color: #ff6b6b;
+  width: 18px;
+  height: 18px;
+  color: rgba(255, 120, 100, 0.9);
   flex-shrink: 0;
+  filter: drop-shadow(0 0 6px rgba(255, 100, 80, 0.3));
 }
 
 .city {
-  font-size: 1.8rem;
-  font-weight: 700;
+  font-size: 2.2rem;
+  font-weight: 800;
+  line-height: 1.1;
+  letter-spacing: -0.5px;
 }
 
 .region {
-  font-size: 0.95rem;
-  color: rgba(255, 255, 255, 0.7);
+  font-size: 0.9rem;
+  color: rgba(255, 255, 255, 0.45);
+  font-weight: 400;
 }
 
 .date-info {
-  font-size: 0.9rem;
-  color: rgba(255, 255, 255, 0.6);
+  font-size: 0.82rem;
+  color: rgba(255, 255, 255, 0.35);
+  font-weight: 400;
+  letter-spacing: 0.3px;
+  margin-top: 4px;
 }
 
 .hero-right {
@@ -765,14 +812,16 @@ onMounted(() => {
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 2px;
+  gap: 4px;
+  position: relative;
+  z-index: 1;
 }
 
 .weather-icon-big {
-  font-size: 4.5rem;
+  font-size: 5rem;
   line-height: 1;
-  filter: drop-shadow(0 4px 12px rgba(0, 0, 0, 0.2));
-  animation: iconFloat 3s ease-in-out infinite;
+  filter: drop-shadow(0 8px 24px rgba(0, 0, 0, 0.15));
+  animation: iconFloat 4s ease-in-out infinite;
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -781,29 +830,37 @@ onMounted(() => {
 
 @keyframes iconFloat {
   0%, 100% { transform: translateY(0); }
-  50% { transform: translateY(-8px); }
+  50% { transform: translateY(-6px); }
 }
 
 .temp-main {
-  font-size: 4rem;
-  font-weight: 800;
-  letter-spacing: -2px;
+  font-size: 5.5rem;
+  font-weight: 900;
+  line-height: 1;
+  letter-spacing: -4px;
+  text-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
 }
 
 .degree {
-  font-size: 1.8rem;
-  font-weight: 400;
+  font-size: 2rem;
+  font-weight: 300;
   vertical-align: super;
+  letter-spacing: 0;
+  opacity: 0.7;
 }
 
 .condition-label {
-  font-size: 1.1rem;
-  color: rgba(255, 255, 255, 0.85);
+  font-size: 1rem;
+  color: rgba(255, 255, 255, 0.65);
+  font-weight: 400;
+  letter-spacing: 0.5px;
 }
 
 .feels-like {
-  font-size: 0.85rem;
-  color: rgba(255, 255, 255, 0.6);
+  font-size: 0.78rem;
+  color: rgba(255, 255, 255, 0.35);
+  font-weight: 400;
+  margin-top: 2px;
 }
 
 /* ===== 底部 ===== */
@@ -811,14 +868,15 @@ onMounted(() => {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  text-align: center;
-  padding: 16px 0;
-  font-size: 0.75rem;
-  color: rgba(255, 255, 255, 0.4);
+  padding: 20px 8px 0;
+  font-size: 0.72rem;
+  color: rgba(255, 255, 255, 0.25);
+  font-weight: 400;
+  letter-spacing: 0.3px;
 }
 
 .visit-count {
-  font-size: 0.75rem;
+  font-size: 0.72rem;
 }
 
 /* ===== 加载页 ===== */
@@ -830,25 +888,30 @@ onMounted(() => {
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  gap: 24px;
+  gap: 28px;
 }
 
-.loader-ring { width: 64px; height: 64px; }
+.loader-ring {
+  width: 48px;
+  height: 48px;
+}
 
 .loader-arc {
   width: 100%;
   height: 100%;
-  border: 4px solid rgba(255, 255, 255, 0.15);
-  border-top-color: #fff;
+  border: 2.5px solid rgba(255, 255, 255, 0.08);
+  border-top-color: rgba(255, 255, 255, 0.6);
   border-radius: 50%;
-  animation: spin 0.9s linear infinite;
+  animation: spin 0.8s linear infinite;
 }
 
 @keyframes spin { to { transform: rotate(360deg); } }
 
 .loading-text {
-  color: rgba(255, 255, 255, 0.8);
-  font-size: 1rem;
+  color: rgba(255, 255, 255, 0.5);
+  font-size: 0.85rem;
+  font-weight: 400;
+  letter-spacing: 0.5px;
 }
 
 /* ===== 错误页 ===== */
@@ -862,7 +925,7 @@ onMounted(() => {
 }
 
 .error-card {
-  padding: 40px 48px;
+  padding: 48px 56px;
   text-align: center;
   color: #fff;
   display: flex;
@@ -870,66 +933,93 @@ onMounted(() => {
   align-items: center;
   gap: 16px;
   max-width: 90vw;
+  border-radius: 28px;
 }
 
-.error-icon { font-size: 3rem; }
+.error-icon {
+  font-size: 2.5rem;
+  filter: grayscale(0.3);
+}
 
 .error-card p {
-  max-width: 320px;
-  line-height: 1.6;
+  max-width: 300px;
+  line-height: 1.7;
+  color: rgba(255, 255, 255, 0.6);
+  font-size: 0.9rem;
+  font-weight: 400;
 }
 
 .error-actions {
   display: flex;
   gap: 12px;
-  margin-top: 8px;
+  margin-top: 12px;
 }
 
 .retry-btn {
-  padding: 10px 32px;
+  padding: 12px 36px;
   border: none;
-  border-radius: 12px;
-  background: rgba(255, 255, 255, 0.2);
-  color: #fff;
-  font-size: 0.95rem;
+  border-radius: 14px;
+  background: rgba(255, 255, 255, 0.1);
+  color: rgba(255, 255, 255, 0.9);
+  font-size: 0.88rem;
   font-weight: 600;
   cursor: pointer;
-  transition: background 0.2s;
+  transition: all 0.25s ease;
+  letter-spacing: 0.3px;
 }
-.retry-btn:hover { background: rgba(255, 255, 255, 0.35); }
+.retry-btn:hover {
+  background: rgba(255, 255, 255, 0.18);
+  transform: translateY(-1px);
+}
 
 /* ===== 城市选择弹窗 ===== */
 .modal-overlay {
   position: fixed;
   inset: 0;
   z-index: 200;
-  background: rgba(0, 0, 0, 0.5);
+  background: rgba(0, 0, 0, 0.6);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
   display: flex;
   align-items: center;
   justify-content: center;
   padding: 20px;
+  animation: fadeIn 0.2s ease;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
 }
 
 .modal-box {
   width: 100%;
-  max-width: 420px;
+  max-width: 400px;
   max-height: 70vh;
   display: flex;
   flex-direction: column;
   overflow: hidden;
+  border-radius: 28px;
+  animation: slideUp 0.25s ease;
+}
+
+@keyframes slideUp {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
 }
 
 .modal-header {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 20px 24px 12px;
+  padding: 24px 28px 16px;
   color: #fff;
 }
 
 .modal-title {
-  font-size: 1.1rem;
+  font-size: 1rem;
   font-weight: 700;
+  letter-spacing: 0.3px;
 }
 
 .modal-close {
@@ -937,26 +1027,30 @@ onMounted(() => {
   height: 28px;
   border: none;
   border-radius: 50%;
-  background: rgba(255, 255, 255, 0.12);
-  color: #fff;
-  font-size: 0.9rem;
+  background: rgba(255, 255, 255, 0.06);
+  color: rgba(255, 255, 255, 0.5);
+  font-size: 0.8rem;
   cursor: pointer;
   display: flex;
   align-items: center;
   justify-content: center;
-  transition: background 0.2s;
+  transition: all 0.2s;
 }
-.modal-close:hover { background: rgba(255, 255, 255, 0.25); }
+.modal-close:hover {
+  background: rgba(255, 255, 255, 0.12);
+  color: #fff;
+}
 
 .modal-hint {
-  padding: 0 24px 12px;
-  color: rgba(255, 255, 255, 0.55);
-  font-size: 0.85rem;
+  padding: 0 28px 14px;
+  color: rgba(255, 255, 255, 0.35);
+  font-size: 0.8rem;
+  font-weight: 400;
 }
 
 .modal-list {
   overflow-y: auto;
-  padding: 0 12px 12px;
+  padding: 0 14px 14px;
 }
 
 .modal-item {
@@ -964,39 +1058,55 @@ onMounted(() => {
   justify-content: space-between;
   align-items: center;
   width: 100%;
-  padding: 14px 16px;
+  padding: 16px;
   border: none;
-  border-radius: 12px;
+  border-radius: 16px;
   background: transparent;
   color: #fff;
-  font-size: 0.95rem;
+  font-size: 0.92rem;
   cursor: pointer;
   text-align: left;
-  transition: background 0.15s;
+  transition: all 0.2s ease;
 }
-.modal-item:hover { background: rgba(255, 255, 255, 0.1); }
+.modal-item:hover {
+  background: rgba(255, 255, 255, 0.06);
+  transform: translateX(4px);
+}
 
-.modal-item-name { font-weight: 600; }
+.modal-item-name {
+  font-weight: 600;
+  letter-spacing: 0.2px;
+}
 
 .modal-item-detail {
-  font-size: 0.8rem;
-  color: rgba(255, 255, 255, 0.5);
+  font-size: 0.78rem;
+  color: rgba(255, 255, 255, 0.35);
+  font-weight: 400;
 }
 
 /* ===== 响应式 ===== */
 @media (max-width: 700px) {
-  .main-content { padding: 16px 12px 32px; }
+  .main-content { padding: 20px 14px 36px; }
 
   .hero-card {
     flex-direction: column;
     text-align: center;
-    padding: 28px 20px;
-    gap: 20px;
+    padding: 32px 24px;
+    gap: 24px;
+    border-radius: 24px;
+  }
+
+  .hero-card::before {
+    width: 100%;
+    height: 50%;
+    top: 0;
+    background: radial-gradient(ellipse at 50% 20%, rgba(255, 255, 255, 0.03) 0%, transparent 70%);
   }
 
   .hero-left { align-items: center; }
   .location-row { justify-content: center; }
-  .temp-main { font-size: 3.2rem; }
-  .weather-icon-big { font-size: 3.5rem; }
+  .temp-main { font-size: 4rem; letter-spacing: -2px; }
+  .weather-icon-big { font-size: 4rem; }
+  .city { font-size: 1.8rem; }
 }
 </style>

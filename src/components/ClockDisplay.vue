@@ -1,7 +1,6 @@
 <script setup>
 import { ref, onMounted, onUnmounted } from 'vue'
 
-// 独立时钟组件，只重新渲染自身，不影响父组件
 const time = ref('')
 let timer = null
 
@@ -29,10 +28,10 @@ onUnmounted(() => {
 
 <style scoped>
 .clock {
-  font-family: 'SF Mono', 'Fira Code', monospace;
-  font-size: 1.3rem;
-  font-weight: 600;
-  letter-spacing: 2px;
-  color: rgba(255, 255, 255, 0.9);
+  font-family: 'SF Mono', 'Fira Code', 'Cascadia Code', monospace;
+  font-size: 1.05rem;
+  font-weight: 500;
+  letter-spacing: 1.5px;
+  color: rgba(255, 255, 255, 0.45);
 }
 </style>

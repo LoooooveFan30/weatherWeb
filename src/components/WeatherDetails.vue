@@ -2,24 +2,9 @@
 import { computed } from 'vue'
 
 const props = defineProps({
-  weatherData: {
-    type: Object,
-    default: null
-  },
-  unit: {
-    type: String,
-    default: 'C'
-  }
+  weatherData: { type: Object, default: null },
+  unit: { type: String, default: 'C' }
 })
-
-const toFahrenheit = (c) => Math.round(c * 9 / 5 + 32)
-
-const formatTemp = (celsius) => {
-  if (props.unit === 'F') return toFahrenheit(celsius)
-  return Math.round(celsius)
-}
-
-const tempUnit = computed(() => props.unit === 'F' ? '°F' : '°C')
 
 const getUvLevel = (uv) => {
   if (uv <= 2) return { text: '低', color: '#4ade80' }
@@ -88,53 +73,58 @@ const getWindDirection = (deg) => {
 }
 
 .detail-card {
-  padding: 18px 14px;
+  padding: 20px 14px;
   color: #fff;
   text-align: center;
   display: flex;
   flex-direction: column;
   align-items: center;
   gap: 6px;
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  transition: all 0.3s ease;
+  border-radius: 20px;
 }
 
 .detail-card:hover {
-  transform: translateY(-4px);
-  box-shadow: 0 12px 40px rgba(0, 0, 0, 0.2);
+  transform: translateY(-3px);
+  border-color: rgba(255, 255, 255, 0.15);
 }
 
 .detail-icon {
-  font-size: 1.5rem;
+  font-size: 1.3rem;
+  opacity: 0.8;
 }
 
 .detail-label {
-  font-size: 0.75rem;
-  color: rgba(255, 255, 255, 0.65);
+  font-size: 0.68rem;
+  color: rgba(255, 255, 255, 0.3);
   text-transform: uppercase;
-  letter-spacing: 1px;
+  letter-spacing: 1.2px;
+  font-weight: 500;
 }
 
 .detail-value {
-  font-size: 1.5rem;
+  font-size: 1.4rem;
   font-weight: 700;
+  letter-spacing: -0.5px;
 }
 
 .detail-value small {
-  font-size: 0.65rem;
+  font-size: 0.6rem;
   font-weight: 400;
   margin-left: 2px;
-  color: rgba(255, 255, 255, 0.7);
+  color: rgba(255, 255, 255, 0.35);
 }
 
 .detail-sub {
-  font-size: 0.7rem;
-  color: rgba(255, 255, 255, 0.5);
+  font-size: 0.68rem;
+  color: rgba(255, 255, 255, 0.4);
+  font-weight: 400;
 }
 
 .detail-bar {
   width: 100%;
-  height: 4px;
-  background: rgba(255, 255, 255, 0.15);
+  height: 3px;
+  background: rgba(255, 255, 255, 0.06);
   border-radius: 2px;
   overflow: hidden;
   margin-top: 4px;
@@ -142,14 +132,12 @@ const getWindDirection = (deg) => {
 
 .detail-bar-fill {
   height: 100%;
-  background: linear-gradient(90deg, rgba(255, 255, 255, 0.4), rgba(255, 255, 255, 0.9));
+  background: linear-gradient(90deg, rgba(255, 255, 255, 0.12), rgba(255, 255, 255, 0.4));
   border-radius: 2px;
   transition: width 1s ease;
 }
 
 @media (max-width: 700px) {
-  .detail-grid {
-    grid-template-columns: repeat(2, 1fr);
-  }
+  .detail-grid { grid-template-columns: repeat(2, 1fr); gap: 10px; }
 }
 </style>
